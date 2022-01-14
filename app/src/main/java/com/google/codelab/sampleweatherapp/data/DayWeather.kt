@@ -19,7 +19,20 @@ data class Weather(
 )
 
 object TestData {
-    val dayData = Weather("Mon, 1 Feb", R.drawable.sunny_and_cloudy, "20", "16", "50")
+    val dayData = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50")
+
+    val hoursData = listOf(
+        Weather("10", R.drawable.sunny_and_cloudy, "23", "16", "50"),
+        Weather("11", R.drawable.sunny_and_cloudy, "18", "14", "60"),
+        Weather("12", R.drawable.rainy, "16", "15", "90"),
+        Weather("13", R.drawable.rainy, "21", "18", "90"),
+        Weather("14", R.drawable.thunder, "20", "6", "100"),
+        Weather("15", R.drawable.rainy, "23", "16", "100"),
+        Weather("16", R.drawable.sunny_and_cloudy, "18", "14", "50"),
+        Weather("17", R.drawable.sunny_and_cloudy, "16", "15", "30"),
+        Weather("18", R.drawable.cloudy_and_moon, "21", "18", "20"),
+        Weather("19", R.drawable.cloudy_and_moon, "17", "10", "0")
+    )
 
     val weekData = listOf(
         Weather("2/2（火）", R.drawable.sunny, "23", "16", "10"),

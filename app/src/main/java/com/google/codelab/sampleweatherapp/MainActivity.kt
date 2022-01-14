@@ -7,14 +7,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +37,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             SampleWeatherAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background, modifier = Modifier.fillMaxHeight()) {
+                Surface(
+                    color = MaterialTheme.colors.background,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
                     WeatherApp()
                 }
             }
@@ -51,7 +55,8 @@ fun WeatherApp() {
         modifier = Modifier.background(BackGround)
     ) {
         TodayWeather(weather = TestData.dayData)
-        WeekWeather(weather = TestData.weekData)
+        DayHoursWeather(weather = TestData.hoursData)
+        WeekWeather(weathers = TestData.weekData)
     }
 }
 
@@ -63,9 +68,12 @@ fun TodayWeather(weather: Weather) {
             .padding(top = 16.dp)
             .background(color = CellBackGround, shape = RoundedCornerShape(16.dp))
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .fillMaxWidth().padding(top = 8.dp))
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        )
         {
             Text(
                 text = "Today",
@@ -106,7 +114,7 @@ fun TodayWeather(weather: Weather) {
 //                    .size(80.dp)
 //                    .padding(end = 16.dp)
 //            )
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.sunny_and_rainny))
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(weather.image))
             LottieAnimation(
                 composition = composition,
                 iterations = LottieConstants.IterateForever,
@@ -157,25 +165,26 @@ fun TodayWeather(weather: Weather) {
 }
 
 @Composable
-fun WeekWeather(weather: List<Weather>) {
+fun DayHoursWeather(weather: List<Weather>) {
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(all = 16.dp)
+        modifier = Modifier
+            .padding(all = 16.dp)
+            .background(color = CellBackGround, shape = RoundedCornerShape(16.dp))
     ) {
         items(weather) { weather ->
-            DayWeatherCell(weather)
+            HourWeatherCell(weather)
             Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }
 
 @Composable
-fun DayWeatherCell(weather: Weather) {
+fun HourWeatherCell(weather: Weather) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .background(color = CellBackGround, shape = RoundedCornerShape(16.dp))
-            .clickable {  }
+            .clickable { }
             .padding(all = 8.dp)
     ) {
         Text(
@@ -191,27 +200,105 @@ fun DayWeatherCell(weather: Weather) {
                 .size(40.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column {
+        Text(
+            text = weather.high + "℃",
+            style = MaterialTheme.typography.body1,
+            color = Color.White
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+
+
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = weather.rainy + "%",
+            color = Color.White,
+            style = MaterialTheme.typography.body1
+        )
+    }
+}
+
+@Composable
+fun WeekWeather(weathers: List<Weather>) {
+    var isExpanded by remember { mutableStateOf(false) }
+    LazyColumn(
+        modifier = Modifier
+            .padding(all = 16.dp)
+            .background(color = CellBackGround, shape = RoundedCornerShape(16.dp))
+            .fillMaxWidth()
+            .clickable { isExpanded = !isExpanded }
+    ) {
+        itemsIndexed(weathers) { index, weather ->
+            if (index == 0) {
                 Text(
-                    text = weather.high + "℃",
-                    style = MaterialTheme.typography.body1,
-                    color = TempHigh
+                    text = "Weekly", color = Color.White,
+                    style = MaterialTheme.typography.h6,
+                    fontSize = 24.sp,
+                    modifier = Modifier.padding(start = 16.dp)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = weather.low + "℃",
-                    style = MaterialTheme.typography.body1,
-                    color = TempLow
-                )
+                Spacer(modifier = Modifier.height(8.dp))
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = weather.rainy + "%",
-                color = Color.White,
-                style = MaterialTheme.typography.body1
-            )
+            when (isExpanded) {
+                true -> {
+                    DayWeatherCell(weather)
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+                false ->{
+                    if(index < 3) {
+                        DayWeatherCell(weather)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+            if (index == weathers.lastIndex) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    Image(
+                        painterResource(id = if (isExpanded) R.drawable.ic_baseline_expand_less_24 else R.drawable.ic_baseline_expand_more_24),
+                        contentDescription = "expand",
+                        modifier = Modifier
+                            .size(24.dp)
+                            .align(alignment = Alignment.BottomCenter)
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
+    }
+}
+
+@Composable
+fun DayWeatherCell(weather: Weather) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = weather.date,
+            color = Color.White,
+            modifier = Modifier.padding(start = 24.dp)
+        )
+        Spacer(modifier = Modifier.width(32.dp))
+        Image(
+            painterResource(id = weather.image),
+            contentDescription = "sunny sometimes cloudy",
+            modifier = Modifier
+                .size(28.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = weather.high + "℃",
+            style = MaterialTheme.typography.body1,
+            color = TempHigh
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = weather.low + "℃",
+            style = MaterialTheme.typography.body1,
+            color = TempLow
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = weather.rainy + "%",
+            color = Color.White,
+            style = MaterialTheme.typography.body1
+        )
     }
 }
 
