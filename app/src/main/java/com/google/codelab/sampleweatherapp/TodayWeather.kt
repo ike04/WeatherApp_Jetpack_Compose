@@ -60,7 +60,7 @@ fun TodayWeather(weather: Weather) {
                 text = weather.high,
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier.padding(start = 24.dp)
             )
             Text(
                 text = "℃",
@@ -69,13 +69,7 @@ fun TodayWeather(weather: Weather) {
                 modifier = Modifier.padding(bottom = 28.dp)
             )
             Spacer(modifier = Modifier.width(200.dp))
-//            Image(
-//                painterResource(id = weather.image),
-//                contentDescription = "",
-//                modifier = Modifier
-//                    .size(80.dp)
-//                    .padding(end = 16.dp)
-//            )
+
             val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(weather.image))
             LottieAnimation(
                 composition = composition,
@@ -89,7 +83,7 @@ fun TodayWeather(weather: Weather) {
                 text = "Rainy",
                 color = Color.White,
                 style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier.padding(start = 24.dp)
             )
             Spacer(modifier = Modifier.width(240.dp))
 
@@ -114,7 +108,7 @@ fun TodayWeather(weather: Weather) {
                 contentDescription = "current location",
                 modifier = Modifier
                     .size(40.dp)
-                    .padding(start = 16.dp)
+                    .padding(start = 24.dp)
             )
             Text(
                 text = "Tokyo",

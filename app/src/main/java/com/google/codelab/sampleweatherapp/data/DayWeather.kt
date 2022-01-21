@@ -31,7 +31,12 @@ object TestData {
         Weather("16", R.drawable.sunny_and_cloudy, "18", "14", "50"),
         Weather("17", R.drawable.sunny_and_cloudy, "16", "15", "30"),
         Weather("18", R.drawable.cloudy_and_moon, "21", "18", "20"),
-        Weather("19", R.drawable.cloudy_and_moon, "17", "10", "0")
+        Weather("19", R.drawable.cloudy_and_moon, "17", "10", "0"),
+        Weather("20", R.drawable.cloudy_and_moon, "17", "10", "0"),
+        Weather("21", R.drawable.rainy_and_moon, "12", "9", "80"),
+        Weather("22", R.drawable.rainy_and_moon, "13", "8", "60"),
+        Weather("23", R.drawable.rainy_and_moon, "11", "10", "80"),
+        Weather("24", R.drawable.moon, "15", "11", "20")
     )
 
     val weekData = listOf(
@@ -44,6 +49,8 @@ object TestData {
         Weather("2/8（月）", R.drawable.rainy, "18", "14", "80"),
         Weather("2/9（火）", R.drawable.sunny_and_cloudy, "16", "15", "50"),
         Weather("2/10（水）", R.drawable.sunny, "21", "18", "10"),
-        Weather("2/11（木）", R.drawable.thunder, "17", "10", "100")
+        Weather("2/11（木）", R.drawable.thunder, "17", "10", "100"),
+        Weather("2/12（金）", R.drawable.thunder, "12", "8", "80"),
+        Weather("2/13（土）", R.drawable.rainy, "11", "7", "70")
     )
 }

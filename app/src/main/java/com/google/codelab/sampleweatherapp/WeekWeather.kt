@@ -14,12 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.codelab.sampleweatherapp.data.Weather
 import com.google.codelab.sampleweatherapp.ui.theme.CellBackGround
-import com.google.codelab.sampleweatherapp.ui.theme.SampleWeatherAppTheme
 import com.google.codelab.sampleweatherapp.ui.theme.TempHigh
 import com.google.codelab.sampleweatherapp.ui.theme.TempLow
 
@@ -36,10 +34,11 @@ fun WeekWeather(weathers: List<Weather>) {
         itemsIndexed(weathers) { index, weather ->
             if (index == 0) {
                 Text(
-                    text = "Weekly", color = Color.White,
+                    text = "Weekly",
+                    color = Color.White,
                     style = MaterialTheme.typography.h6,
                     fontSize = 24.sp,
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier.padding(start = 16.dp, top = 8.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -48,8 +47,8 @@ fun WeekWeather(weathers: List<Weather>) {
                     DayWeatherCell(weather)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
-                false ->{
-                    if(index < 3) {
+                false -> {
+                    if (index < 3) {
                         DayWeatherCell(weather)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
@@ -63,6 +62,7 @@ fun WeekWeather(weathers: List<Weather>) {
                         modifier = Modifier
                             .size(24.dp)
                             .align(alignment = Alignment.BottomCenter)
+                            .padding(bottom = 8.dp)
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
