@@ -7,18 +7,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.codelab.sampleweatherapp.data.TestData
 import com.google.codelab.sampleweatherapp.ui.theme.BackGround
 import com.google.codelab.sampleweatherapp.ui.theme.SampleWeatherAppTheme
+import com.google.codelab.sampleweatherapp.ui.theme.TabBackground
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -53,7 +58,14 @@ fun WeatherApp() {
     val coroutineScope = rememberCoroutineScope()
     Column {
         TabRow(
-            selectedTabIndex = tabIndex
+            selectedTabIndex = tabIndex,
+            backgroundColor = BackGround,
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    Modifier.tabIndicatorOffset(tabPositions[tabIndex]).padding(horizontal = 16.dp),
+                    color = White
+                )
+            }
         ) {
             tabData.forEachIndexed { index, tab ->
                 Tab(selected = tabIndex == index, onClick = {
@@ -61,7 +73,10 @@ fun WeatherApp() {
                         pagerState.animateScrollToPage(index)
                     }
                 }, text = {
-                    Text(text = tab)
+                    Text(
+                        text = tab,
+                        color = White
+                    )
                 })
             }
         }

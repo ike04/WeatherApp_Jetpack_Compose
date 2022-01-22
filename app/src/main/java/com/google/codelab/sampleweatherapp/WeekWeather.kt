@@ -26,7 +26,7 @@ fun WeekWeather(weathers: List<Weather>) {
     var isExpanded by remember { mutableStateOf(false) }
     LazyColumn(
         modifier = Modifier
-            .padding(all = 16.dp)
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
             .background(color = CellBackGround, shape = RoundedCornerShape(16.dp))
             .fillMaxWidth()
             .clickable { isExpanded = !isExpanded }

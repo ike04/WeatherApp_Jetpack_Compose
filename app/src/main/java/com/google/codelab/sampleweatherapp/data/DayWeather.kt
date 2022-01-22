@@ -17,9 +17,9 @@ data class Weather(
 )
 
 object TestData {
-    private val dayData1 = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50", "rainy")
-    private val dayData2 = Weather("Mon, 1 Feb", R.raw.sunny, "22", "19", "10", "sunny")
-    private val dayData3 = Weather("Mon, 1 Feb", R.raw.snow, "8", "3", "80", "snow")
+    private val dayData1 = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50", "Rainy")
+    private val dayData2 = Weather("Mon, 1 Feb", R.raw.sunny, "22", "19", "10", "Sunny")
+    private val dayData3 = Weather("Mon, 1 Feb", R.raw.snow, "8", "3", "80", "Snow")
     private val tokyo = Location("Tokyo", dayData1)
     private val chiba = Location("Chiba", dayData2)
     private val osaka = Location("Osaka", dayData3)
