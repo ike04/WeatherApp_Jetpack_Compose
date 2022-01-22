@@ -2,14 +2,6 @@ package com.google.codelab.sampleweatherapp.data
 
 import com.google.codelab.sampleweatherapp.R
 
-//enum class DayWeather(@IdRes val image: Int, val high: String, val low: String, val rainy: String) {
-//    Day1(R.drawable.sunny_and_cloudy, "20", "16", "30"),
-//    Day2(R.drawable.sunny, "23", "16", "10"),
-//    Day3(R.drawable.rainy, "18", "14", "80"),
-//    Day4(R.drawable.sunny_and_cloudy, "16", "15", "50"),
-//    Day5(R.drawable.sunny, "21", "18", "10");
-//}
-
 data class Weather(
     val date: String,
     val image: Int,
@@ -18,8 +10,17 @@ data class Weather(
     val rainy: String
 )
 
+data class Location(
+    val name: String,
+    val weather: Weather
+)
+
 object TestData {
-    val dayData = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50")
+    private val dayData = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50")
+    private val tokyo = Location("Tokyo", dayData)
+    private val chiba = Location("Chiba", dayData)
+    private val osaka = Location("Osaka", dayData)
+    val weatherList = listOf(tokyo, chiba, osaka)
 
     val hoursData = listOf(
         Weather("10", R.drawable.sunny_and_cloudy, "23", "16", "50"),

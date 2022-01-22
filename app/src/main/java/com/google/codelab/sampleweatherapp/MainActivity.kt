@@ -6,17 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.google.codelab.sampleweatherapp.data.TestData
 import com.google.codelab.sampleweatherapp.ui.theme.BackGround
 import com.google.codelab.sampleweatherapp.ui.theme.SampleWeatherAppTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,7 +30,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     color = MaterialTheme.colors.background,
-                    modifier = Modifier.fillMaxHeight()
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     WeatherApp()
                 }
@@ -33,18 +39,51 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalPagerApi
 @Composable
 fun WeatherApp() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.background(BackGround)
-    ) {
-        TodayWeather(weather = TestData.dayData)
-        DayHoursWeather(weather = TestData.hoursData)
-        WeekWeather(weathers = TestData.weekData)
+    val tabData = TestData.weatherList.map { it.name }
+    val pagerState = rememberPagerState(
+        pageCount = tabData.size,
+        initialOffscreenLimit = 2,
+        infiniteLoop = false,
+        initialPage = 0,
+    )
+    val tabIndex = pagerState.currentPage
+    val coroutineScope = rememberCoroutineScope()
+    Column {
+        TabRow(
+            selectedTabIndex = tabIndex
+        ) {
+            tabData.forEachIndexed { index, tab ->
+                Tab(selected = tabIndex == index, onClick = {
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                }, text = {
+                    Text(text = tab)
+                })
+            }
+        }
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.weight(1f)
+        ) { index ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .background(BackGround)
+                    .fillMaxHeight()
+            ) {
+                TodayWeather(location = TestData.weatherList[index])
+                DayHoursWeather(weather = TestData.hoursData)
+                WeekWeather(weathers = TestData.weekData)
+            }
+        }
     }
 }
 
+@ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

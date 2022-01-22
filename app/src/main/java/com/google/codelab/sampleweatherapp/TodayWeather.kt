@@ -18,12 +18,12 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.google.codelab.sampleweatherapp.data.Weather
+import com.google.codelab.sampleweatherapp.data.Location
 import com.google.codelab.sampleweatherapp.ui.theme.CellBackGround
 import com.google.codelab.sampleweatherapp.ui.theme.TempUnit
 
 @Composable
-fun TodayWeather(weather: Weather) {
+fun TodayWeather(location: Location) {
     Column(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -46,7 +46,7 @@ fun TodayWeather(weather: Weather) {
             )
             Spacer(modifier = Modifier.width(220.dp))
             Text(
-                text = weather.date,
+                text = location.weather.date,
                 color = Color.White,
                 fontSize = 12.sp,
                 modifier = Modifier
@@ -57,7 +57,7 @@ fun TodayWeather(weather: Weather) {
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = weather.high,
+                text = location.weather.high,
                 color = Color.White,
                 style = MaterialTheme.typography.h3,
                 modifier = Modifier.padding(start = 24.dp)
@@ -70,7 +70,7 @@ fun TodayWeather(weather: Weather) {
             )
             Spacer(modifier = Modifier.width(200.dp))
 
-            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(weather.image))
+            val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(location.weather.image))
             LottieAnimation(
                 composition = composition,
                 iterations = LottieConstants.IterateForever,
@@ -95,7 +95,7 @@ fun TodayWeather(weather: Weather) {
                     .padding(end = 4.dp)
             )
             Text(
-                text = weather.rainy + "%",
+                text = location.weather.rainy + "%",
                 color = Color.White,
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier.padding(end = 16.dp)
@@ -111,7 +111,7 @@ fun TodayWeather(weather: Weather) {
                     .padding(start = 24.dp)
             )
             Text(
-                text = "Tokyo",
+                text = location.name,
                 color = Color.White,
                 fontSize = 12.sp
             )
