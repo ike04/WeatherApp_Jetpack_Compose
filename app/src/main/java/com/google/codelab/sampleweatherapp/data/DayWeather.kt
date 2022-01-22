@@ -2,24 +2,27 @@ package com.google.codelab.sampleweatherapp.data
 
 import com.google.codelab.sampleweatherapp.R
 
-data class Weather(
-    val date: String,
-    val image: Int,
-    val high: String,
-    val low: String,
-    val rainy: String
-)
-
 data class Location(
     val name: String,
     val weather: Weather
 )
 
+data class Weather(
+    val date: String,
+    val image: Int,
+    val high: String,
+    val low: String,
+    val rainy: String,
+    val name: String? = null
+)
+
 object TestData {
-    private val dayData = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50")
-    private val tokyo = Location("Tokyo", dayData)
-    private val chiba = Location("Chiba", dayData)
-    private val osaka = Location("Osaka", dayData)
+    private val dayData1 = Weather("Mon, 1 Feb", R.raw.sunny_and_rainny, "20", "16", "50", "rainy")
+    private val dayData2 = Weather("Mon, 1 Feb", R.raw.sunny, "22", "19", "10", "sunny")
+    private val dayData3 = Weather("Mon, 1 Feb", R.raw.snow, "8", "3", "80", "snow")
+    private val tokyo = Location("Tokyo", dayData1)
+    private val chiba = Location("Chiba", dayData2)
+    private val osaka = Location("Osaka", dayData3)
     val weatherList = listOf(tokyo, chiba, osaka)
 
     val hoursData = listOf(

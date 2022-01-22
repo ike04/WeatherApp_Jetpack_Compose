@@ -79,12 +79,14 @@ fun TodayWeather(location: Location) {
         }
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            Text(
-                text = "Rainy",
-                color = Color.White,
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(start = 24.dp)
-            )
+            location.weather.name?.let {
+                Text(
+                    text = it,
+                    color = Color.White,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(start = 24.dp)
+                )
+            }
             Spacer(modifier = Modifier.width(240.dp))
 
             Image(
@@ -113,7 +115,8 @@ fun TodayWeather(location: Location) {
             Text(
                 text = location.name,
                 color = Color.White,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
 
