@@ -23,7 +23,6 @@ import com.google.accompanist.pager.rememberPagerState
 import com.google.codelab.sampleweatherapp.data.TestData
 import com.google.codelab.sampleweatherapp.ui.theme.BackGround
 import com.google.codelab.sampleweatherapp.ui.theme.SampleWeatherAppTheme
-import com.google.codelab.sampleweatherapp.ui.theme.TabBackground
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -62,7 +61,9 @@ fun WeatherApp() {
             backgroundColor = BackGround,
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
-                    Modifier.tabIndicatorOffset(tabPositions[tabIndex]).padding(horizontal = 16.dp),
+                    Modifier
+                        .tabIndicatorOffset(tabPositions[tabIndex])
+                        .padding(horizontal = 16.dp),
                     color = White
                 )
             }

@@ -21,9 +21,9 @@ object TestData {
     private val dayData2 = Weather("Mon, 1 Feb", R.raw.sunny, "22", "19", "10", "Sunny")
     private val dayData3 = Weather("Mon, 1 Feb", R.raw.snow, "8", "3", "80", "Snow")
     private val tokyo = Location("Tokyo", dayData1)
-    private val chiba = Location("Chiba", dayData2)
+    private val fukuoka = Location("Fukuoka", dayData2)
     private val osaka = Location("Osaka", dayData3)
-    val weatherList = listOf(tokyo, chiba, osaka)
+    val weatherList = listOf(tokyo, fukuoka, osaka)
 
     val hoursData = listOf(
         Weather("10", R.drawable.sunny_and_cloudy, "23", "16", "50"),
